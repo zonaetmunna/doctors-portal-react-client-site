@@ -8,9 +8,10 @@ import Typography from '@mui/material/Typography';
 const Service = ({ service }) => {
      const { name, description, img } = service;
      return (
-          <div>
-               {/* <Grid item xs={2} sm={4} md={4}> */}
-               <Card sx={{ maxWidth: 345, p: 2 }}>
+
+          <Grid item xs={12} sm={6} md={4}>
+               < Card sx={{ maxWidth: 345, p: 2, boxShadow: 0 }
+               }>
                     <CardMedia
                          component="img"
                          height="140"
@@ -27,9 +28,9 @@ const Service = ({ service }) => {
                          </Typography>
                     </CardContent>
 
-               </Card>
-               {/* </Grid> */}
-          </div>
+               </Card >
+          </Grid>
+
      );
 };
 
