@@ -8,9 +8,11 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import useAuth from '../../../Hooks/useAuth';
 
 const Navigation = () => {
+     const { user, logOut } = useAuth();
      return (
           <Box sx={{ flexGrow: 1 }}>
                <AppBar position="static">
@@ -22,7 +24,17 @@ const Navigation = () => {
                               Services
                          </Typography>
                          <Link to="/appointment"> <Button color="inherit">Appointment</Button></Link>
-                         <Button color="inherit">login</Button>
+                         {
+                              user.email ?
+                                   <Box>
+                                        <NavLink style={{ textDecoration: 'none' }} to="/dashboard">  <Button color="inherit">Dashboard</Button></NavLink>
+                                        <Button onClick={logOut} color="inherit">logOut</Button>
+                                   </Box>
+
+                                   : <NavLink style={{ textDecoration: 'none' }} to="/login">  <Button color="inherit">login</Button></NavLink>
+                         }
+
+
                     </Toolbar>
                </AppBar>
           </Box>

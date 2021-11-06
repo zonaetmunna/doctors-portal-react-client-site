@@ -9,7 +9,7 @@ const Appointment = () => {
           <div>
                <Navigation></Navigation>
                <AppointmentHeader date={date} setDate={setDate}></AppointmentHeader>
-               <AvailableAppointment date={date} setDate={setDate}></AvailableAppointment>
+               <AvailableAppointment date={date} ></AvailableAppointment>
           </div>
      );
 };

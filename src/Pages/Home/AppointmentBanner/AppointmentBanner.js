@@ -10,7 +10,6 @@ const appointmentBg = {
      background: 'url(https://i.ibb.co/CvL78Pd/appointment-bg.png)',
      backgroundColor: 'rgba(87, 51, 41,0.9)',
      backgroundBlendMode: 'darken,luminosity',
-
      marginTop: 200,
 }
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import isWeekend from 'date-fns/isWeekend';
 import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -11,7 +10,6 @@ const Calender = ({ date, setDate }) => {
           <LocalizationProvider dateAdapter={AdapterDateFns}>
                <StaticDatePicker
                     displayStaticWrapperAs="desktop"
-
                     value={date}
                     onChange={(newValue) => {
                          setDate(newValue);

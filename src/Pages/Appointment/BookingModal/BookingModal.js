@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import { Button } from '@mui/material';
+import Button from '@mui/material/Button';
+import useAuth from '../../../Hooks/useAuth';
 
 
 const style = {
@@ -20,15 +21,51 @@ const style = {
      p: 4,
 };
 
-const BookingModal = ({ openBooking, handleBookingClose, handleBookingOpen, booking, date }) => {
+const BookingModal = ({ openBooking, handleBookingClose, booking, date, setBookingSuccess }) => {
      const { time, name } = booking;
+     const { user } = useAuth();
 
-     const handleSubmit = (e) => {
-          alert('submittoing');
-          handleBookingClose();
-          e.preventDefault();
+     const initialInfo = { patientName: user.displayName, email: user.email, phone: '' };
+     const [bookingInfo, setBookingInfo] = useState({});
+
+     // handleOnBlur
+     const handleOnBlur = (e) => {
+          const field = e.target.name;
+          const value = e.target.value;
+          const newInfo = { ...bookingInfo };
+          newInfo[field] = value;
+          setBookingInfo(newInfo);
 
      }
+     // handleBooking submit
+     const handleBookingSubmit = (e) => {
+          e.preventDefault();
+          const appointment = {
+               ...bookingInfo,
+               time,
+               serviceName: name,
+               date: date.toLocaleDateString()
+          }
+          // send to the database
+          fetch('http://localhost:5000/appointments', {
+               method: 'POST',
+               headers: {
+                    'content-type': 'application/json'
+               },
+               body: JSON.stringify(appointment)
+          })
+               .then(res => res.json())
+               .then(data => {
+                    if (data.insertedId) {
+                         setBookingSuccess(true);
+                         handleBookingClose();
+                    }
+                    console.log(data);
+               })
+          // for ignore auto submit
+
+     }
+
      return (
           <Modal
                aria-labelledby="transition-modal-title"
@@ -46,49 +83,57 @@ const BookingModal = ({ openBooking, handleBookingClose, handleBookingOpen, book
                          <Typography id="transition-modal-title" variant="h6" component="h2">
                               {name}
                          </Typography>
-                         <form onSubmit={handleSubmit}>
+                         <form onSubmit={handleBookingSubmit}>
                               <TextField
                                    disabled
                                    sx={{ width: '90%', m: 2 }}
                                    id="filled-size-small"
+                                   variant="filled"
+                                   size="small"
+
                                    defaultValue={time}
-                                   variant="filled"
-                                   size="small"
                               />
                               <TextField
-
                                    sx={{ width: '90%', m: 2 }}
                                    id="filled-size-small"
-                                   defaultValue="your name"
                                    variant="filled"
                                    size="small"
+
+                                   name="patientName"
+                                   onBlur={handleOnBlur}
+                                   defaultValue={user.displayName}
                               />
                               <TextField
-
                                    sx={{ width: '90%', m: 2 }}
                                    id="filled-size-small"
-                                   defaultValue="your email"
                                    variant="filled"
                                    size="small"
+
+                                   name="email"
+                                   onBlur={handleOnBlur}
+                                   defaultValue={user.email}
                               />
                               <TextField
-
                                    sx={{ width: '90%', m: 2 }}
                                    id="filled-size-small"
+                                   variant="filled"
+                                   size="small"
+
+                                   name="phone"
+                                   onBlur={handleOnBlur}
                                    defaultValue="your phone"
-                                   variant="filled"
-                                   size="small"
                               />
                               <TextField
                                    disabled
                                    sx={{ width: '90%', m: 2 }}
                                    id="filled-size-small"
-                                   defaultValue={date.toDateString()}
                                    variant="filled"
                                    size="small"
-                              />
-                              <Button type="submit" variant="contained">submit</Button>
 
+                                   defaultValue={date.toDateString()}
+                              />
+
+                              <Button type="submit" variant="contained">submit</Button>
                          </form>
                     </Box>
                </Fade>
