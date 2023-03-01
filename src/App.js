@@ -1,13 +1,12 @@
-
-import './App.css';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Home from './Pages/Home/Home/Home';
-import Appointment from './Pages/Appointment/Appointment/Appointment';
-import Login from './Pages/Login/Login/Login';
-import Register from './Pages/Login/Login/Register/Register';
-import AuthProvider from './context/AuthProvider/AuthProvider';
-import PrivateRoute from './Pages/Login/PrivateRoute/PrivateRoute';
-import Dashboard from './Pages/Dashboard/Dashboard/DashBoard';
+import "./App.css";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Home from "./Pages/Home/Home/Home";
+import Appointment from "./Pages/Appointment/Appointment/Appointment";
+import Login from "./Pages/Login/Login/Login";
+import Register from "./Pages/Login/Login/Register/Register";
+import AuthProvider from "./context/AuthProvider/AuthProvider";
+import PrivateRoute from "./Pages/Login/PrivateRoute/PrivateRoute";
+import Dashboard from "./Pages/Dashboard/Dashboard/DashBoard";
 
 function App() {
   return (
